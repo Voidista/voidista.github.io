@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>FlowIn – 1分で集中を取り戻すトレーニングアプリ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="FlowIn は、1分のミニセッションで集中状態を取り戻すための iOS アプリです。育児の合間や仕事の前に、さっと集中モードに切り替えるための小さなトレーニングツール。"
+  />
+  <!-- OGP（X やSNSでシェアしたとき用） 必要なら後で画像URLを差し替え -->
+  <meta property="og:title" content="FlowIn – 1分で集中を取り戻すトレーニングアプリ" />
+  <meta property="og:description" content="1分のミニセッションで、集中状態（Flow）に入りやすくする iOS アプリ。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://voidista.github.io/" />
+  <!-- ここに App Store スクショなどの画像URLを置けるなら差し替え -->
+  <!-- <meta property="og:image" content="https://voidista.github.io/osd1.png" /> -->
+
+  <style>
+    :root {
+      --bg: #f5f5fb;
+      --bg-card: #ffffff;
+      --primary: #5b5eea;
+      --primary-soft: #eef0ff;
+      --text-main: #222222;
+      --text-sub: #666666;
+      --border-soft: #e0e2f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, "YuGothic", "Yu Gothic", "Hiragino Sans",
+        "Meiryo", sans-serif;
+      background: radial-gradient(circle at top left, #f0f3ff, #fdfdff 40%, #f5f6fb);
+      color: var(--text-main);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6a77ff, #9e6bff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text-main {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .lang-switch {
+      font-size: 12px;
+      color: var(--text-sub);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .lang-switch button.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 11px;
+      margin-bottom: 10px;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #6b6eff, #9e6bff);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(70, 70, 160, 0.23);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(70, 70, 160, 0.25);
+    }
+
+    .store-note {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .hero-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 16px 16px 18px;
+      box-shadow: 0 16px 40px rgba(90, 100, 180, 0.18);
+      border: 1px solid var(--border-soft);
+    }
+
+    .hero-phone {
+      background: radial-gradient(circle at top, #f1f4ff, #ffffff);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #e0e3ff;
+    }
+
+    .hero-phone-inner {
+      border-radius: 12px;
+      background: #0c0d1b;
+      color: #f5f5ff;
+      padding: 14px 14px 16px;
+      font-size: 11px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .timer-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      border: 3px solid rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #6b6eff, #242654);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .timer-label {
+      font-size: 10px;
+      color: #b5b8ff;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .timer-phrase {
+      font-size: 11px;
+      margin-top: 4px;
+      color: #f8f8ff;
+    }
+
+    .hero-footnote {
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 18px;
+      padding: 18px 18px 14px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section ul {
+      padding-left: 18px;
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .section p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin: 6px 0 0;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-soft);
+      padding-top: 12px;
+    }
+
+    footer a {
+      font-size: 11px;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-title {
+        font-size: 22px;
+      }
+      .page {
+        padding: 20px 14px 40px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="logo">
+      <div class="logo-mark">F</div>
+      <div>
+        <div class="logo-text-main">FlowIn</div>
+        <div class="logo-text-sub">1-minute focus training app</div>
+      </div>
+    </div>
+    <div class="lang-switch">
+      <span>Language:</span>
+      <button id="btn-ja" class="active" type="button">日本語</button>
+      <button id="btn-en" type="button">English</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="tagline" data-i18n="tagline">
+        育児や仕事のすき間に、そっと集中を取り戻す。
+      </div>
+      <h1 class="hero-title" data-i18n="hero-title">
+        1分で “集中モード” を取り戻すための<br />小さなトレーニングアプリ。
+      </h1>
+      <p class="hero-sub" data-i18n="hero-sub">
+        FlowIn は、1分のミニセッションで「今ここ」に意識を戻し、
+        集中しやすい状態（Flow）に入るきっかけをつくる iOS アプリです。<br />
+        育児の合間、仕事前、夜のひと息に。忙しい日常の中でも、
+        無理なく続けられるように設計されています。
+      </p>
+
+      <div class="cta-group">
+        <a
+          class="btn-primary"
+          href="https://apps.apple.com/app/flowin-focus/id6754501229"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="cta-button"
+        >
+          App Store で FlowIn を開く
+        </a>
+        <div class="store-note" data-i18n="cta-note">
+          ※ iPhone / iPad（iOS 17 以降）対応
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-phone">
+        <div class="hero-phone-inner">
+          <div>
+            <div class="timer-label" data-i18n="phone-label">FOCUS SESSION</div>
+            <div class="timer-circle">1:00</div>
+            <div class="timer-phrase" data-i18n="phone-text">
+              画面を見つめて、呼吸を整え、ただ “今” に集中する1分間。
+            </div>
+          </div>
+          <div class="hero-footnote" data-i18n="phone-footnote">
+            FlowIn はトレーニングのきっかけをつくるツールです。<br />
+            医療行為や治療を目的としたアプリではありません。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <section class="section">
+    <h2 class="section-title" data-i18n="sec1-title">FlowIn でできること</h2>
+    <ul>
+      <li data-i18n="sec1-1">1分の集中セッションで、頭を “今ここ” に戻す習慣づけ</li>
+      <li data-i18n="sec1-2">セッションごとの記録で、自分の「集中のリズム」を見える化</li>
+      <li data-i18n="sec1-3">音も派手な演出もない、静かな UI で気が散りにくい設計</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="sec2-title">こんなときに</h2>
+    <ul>
+      <li data-i18n="sec2-1">育児の合間に、自分の思考を一度リセットしたいとき</li>
+      <li data-i18n="sec2-2">仕事や勉強を始める前に、脳のエンジンを温めたいとき</li>
+      <li data-i18n="sec2-3">寝る前に、スマホを見る「最後の1分」を整えたいとき</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="sec3-title">About FlowIn (English)</h2>
+    <p data-i18n="sec3-text">
+      FlowIn is a tiny iOS app that helps you get back into a focused state
+      with a 1-minute session. No complex settings, no social features –
+      just a quiet screen and a short ritual to remind your brain:
+      “now is focus time.”
+    </p>
+  </section>
+
+  <footer>
+    <div>
+      © 2025 Takanobu Nishi / Voidista
+    </div>
+    <div>
+      <a href="https://apps.apple.com/app/flowin-focus/id6754501229" target="_blank" rel="noopener noreferrer">
+        FlowIn を App Store で見る
+      </a>
+      &nbsp;|&nbsp;
+      <a href="https://sites.google.com/view/flow-in-privacy-policy/" target="_blank" rel="noopener noreferrer">
+        プライバシーポリシー
+      </a>
+      &nbsp;|&nbsp;
+      <a href="https://x.com/_voidista" target="_blank" rel="noopener noreferrer">
+        X (Twitter) @_voidista
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // 超シンプルな日英切り替え
+  const jaTexts = {
+    "tagline": "育児や仕事のすき間に、そっと集中を取り戻す。",
+    "hero-title": "1分で “集中モード” を取り戻すための<br />小さなトレーニングアプリ。",
+    "hero-sub":
+      "FlowIn は、1分のミニセッションで「今ここ」に意識を戻し、\n        集中しやすい状態（Flow）に入るきっかけをつくる iOS アプリです。<br />\n        育児の合間、仕事前、夜のひと息に。忙しい日常の中でも、\n        無理なく続けられるように設計されています。",
+    "cta-button": "App Store で FlowIn を開く",
+    "cta-note": "※ iPhone / iPad（iOS 17 以降）対応",
+    "phone-label": "FOCUS SESSION",
+    "phone-text": "画面を見つめて、呼吸を整え、ただ “今” に集中する1分間。",
+    "phone-footnote":
+      "FlowIn はトレーニングのきっかけをつくるツールです。<br />医療行為や治療を目的としたアプリではありません。",
+    "sec1-title": "FlowIn でできること",
+    "sec1-1": "1分の集中セッションで、頭を “今ここ” に戻す習慣づけ",
+    "sec1-2": "セッションごとの記録で、自分の「集中のリズム」を見える化",
+    "sec1-3": "音も派手な演出もない、静かな UI で気が散りにくい設計",
+    "sec2-title": "こんなときに",
+    "sec2-1": "育児の合間に、自分の思考を一度リセットしたいとき",
+    "sec2-2": "仕事や勉強を始める前に、脳のエンジンを温めたいとき",
+    "sec2-3": "寝る前に、スマホを見る「最後の1分」を整えたいとき",
+    "sec3-title": "About FlowIn (English)",
+    "sec3-text":
+      "FlowIn is a tiny iOS app that helps you get back into a focused state\n      with a 1-minute session. No complex settings, no social features –\n      just a quiet screen and a short ritual to remind your brain:\n      “now is focus time.”"
+  };
+
+  const enTexts = {
+    "tagline": "A tiny ritual to slip back into focus during busy days.",
+    "hero-title":
+      "A tiny 1-minute training app\n      to bring you back into focus.",
+    "hero-sub":
+      "FlowIn is an iOS app designed to help you re-enter a focused state\n      with short, 1-minute sessions.<br />\n      Before work, between childcare tasks, or at the end of the day –\n      it's a quiet tool you can keep coming back to without pressure.",
+    "cta-button": "Open FlowIn on the App Store",
+    "cta-note": "iPhone / iPad (iOS 17 or later)",
+    "phone-label": "FOCUS SESSION",
+    "phone-text":
+      "Look at the screen, breathe slowly, and spend one minute simply being here.",
+    "phone-footnote":
+      "FlowIn is a self-training aid, not a medical or therapeutic product.",
+    "sec1-title": "What FlowIn helps you do",
+    "sec1-1": "Build a habit of bringing your attention back with a 1-minute ritual.",
+    "sec1-2": "Notice your own rhythm of focus through session logs.",
+    "sec1-3": "Stay undistracted with a calm, minimal interface.",
+    "sec2-title": "When to use FlowIn",
+    "sec2-1": "Between childcare tasks, when your mind feels scattered.",
+    "sec2-2": "Right before deep work or study, as a starting cue.",
+    "sec2-3": "As the last minute with your phone before going to bed.",
+    "sec3-title": "About FlowIn",
+    "sec3-text":
+      "FlowIn is a minimalist focus companion.\n      It doesn't track you across apps or show social feeds –\n      it simply provides a gentle structure for short focus sessions."
+  };
+
+  function applyLang(dict) {
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (!dict[key]) return;
+      if (dict[key].includes("<br")) {
+        el.innerHTML = dict[key];
+      } else {
+        el.innerHTML = dict[key].replace(/\n/g, "<br />");
+      }
+    });
+  }
+
+  document.getElementById("btn-ja").addEventListener("click", () => {
+    applyLang(jaTexts);
+    document.getElementById("btn-ja").classList.add("active");
+    document.getElementById("btn-en").classList.remove("active");
+  });
+
+  document.getElementById("btn-en").addEventListener("click", () => {
+    applyLang(enTexts);
+    document.getElementById("btn-en").classList.add("active");
+    document.getElementById("btn-ja").classList.remove("active");
+  });
+
+  // 初期状態は日本語
+  applyLang(jaTexts);
+</script>
+</body>
+</html>
